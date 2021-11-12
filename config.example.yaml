@@ -1,0 +1,25 @@
+app:
+  name: "MIN"
+  addr: "127.0.0.1"
+  port: 3000
+  debug: true
+
+log:
+  level: "info"
+
+database:
+  driver: "mysql"
+  host: "127.0.0.1"
+  port: 3306
+  user: ""
+  password: ""
+  database: ""
+  debug: false
+
+redis:
+  host: "127.0.0.1"
+  port: 6379
+  password: ""
+
+jwt:
+  secret: "z3OjwW1eP6wjlvkfKQrUHiaRwmY71NJvk4CPSgBavCQvANnb7lEDiifxxP50Y9Lt"

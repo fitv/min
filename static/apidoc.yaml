@@ -1,0 +1,184 @@
+openapi: 3.0.0
+
+info:
+  version: 1.0.0
+  title: MIN
+
+servers:
+  - url: http://127.0.0.1:3000/api/v1
+    description: Local
+
+tags:
+  - name: auth
+    description: Authorization
+
+paths:
+  /auth/login:
+    post:
+      summary: Login
+      security: []
+      tags:
+        - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Username
+                password:
+                  type: string
+                  description: Password
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenObject"
+        "400":
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorObject"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FormErrorObject"
+
+  /auth/register:
+    post:
+      summary: Register
+      security: []
+      tags:
+        - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Username
+                password:
+                  type: string
+                  description: Password
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserObject"
+        "400":
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorObject"
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FormErrorObject"
+
+  /auth/refresh:
+    post:
+      summary: Refresh Token
+      tags:
+        - auth
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenObject"
+        "400":
+          description: Failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorObject"
+
+  /auth/profile:
+    get:
+      summary: User Profile
+      tags:
+        - auth
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/UserObject"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    UserObject:
+      description: User Object
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID
+        username:
+          type: string
+          description: Username
+
+    TokenObject:
+      description: Token Object
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: token
+        token_type:
+          type: string
+          description: token type
+        expires_in:
+          type: integer
+          description: Expiration（seconds）
+
+    MessageObject:
+      description: Message Object
+      type: object
+      properties:
+        message:
+          type: string
+
+    ErrorObject:
+      description: Error Object
+      type: object
+      properties:
+        message:
+          type: string
+
+    FormErrorObject:
+      description: Validation Error Object
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: object
+          properties:
+            field_name:
+              type: string
+
+security:
+  - bearerAuth: []

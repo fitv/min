@@ -1,0 +1,53 @@
+{{ define "paginator" }}
+
+{{ template "header" $ }}
+
+{{ $paginator := "Paginator" -}}
+
+type {{ $paginator }} struct {
+    CurrentPage int          `json:"current_page"`
+	PerPage     int          `json:"per_page"`
+	LastPage    int          `json:"last_page"`
+	Total       int          `json:"total"`
+    Data        interface{}      `json:"data"`
+}
+
+{{ range $node := $.Nodes -}}
+
+{{ $name := $node.Name }}
+
+{{ $q := "query" -}}
+{{ $query := print $node.QueryName -}}
+func ({{ $q }} *{{ $query }}) Paginate(ctx context.Context, c *gin.Context) (*{{ $paginator }}, error) {
+    page := cast.ToInt(c.Query("page"))
+	perPage := cast.ToInt(c.Query("per_page"))
+	if page < 1 {
+		page = 1
+	}
+	if perPage < 1 {
+		perPage = 15
+	}
+	offset := perPage * (page - 1)
+
+	total, err := {{ $q }}.Clone().Count(ctx)
+	if err != nil {
+		return nil, err
+	}
+	var data interface{}
+	data, err = {{ $q }}.Offset(offset).Limit(perPage).All(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &{{ $paginator }}{
+		Data:        data,
+		Total:       total,
+		PerPage:     perPage,
+		CurrentPage: page,
+		LastPage:    int(math.Ceil(float64(total) / float64(perPage))),
+	}, nil
+}
+
+{{- end }}
+
+{{ end }}
