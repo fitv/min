@@ -1,6 +1,6 @@
 ## MIN - 一个基于 GIN 的 API 骨架
 
-[English](README.md) | [中文](README_zh.md)
+[English](README.md)
 
 ## 使用的第三方包
 - [Gin](https://github.com/gin-gonic/gin)
@@ -28,7 +28,7 @@ git clone https://github.com/fitv/min.git
 
 复制配置文件
 ```
-cp config.example.yml config.yml
+cp config.example.yaml config.yaml
 ```
 
 运行应用

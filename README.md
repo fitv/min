@@ -1,6 +1,6 @@
 ## MIN - an API skeleton based on Gin
 
-[English](README.md) | [中文](README_zh.md)
+[中文](README_zh.md)
 
 ## Packages used
 - [Gin](https://github.com/gin-gonic/gin)
@@ -28,7 +28,7 @@ git clone https://github.com/fitv/min.git
 
 Copy the configuration file
 ```
-cp config.example.yml config.yml
+cp config.example.yaml config.yaml
 ```
 
 Run Application
