@@ -139,13 +139,13 @@ func (User) Info(c *gin.Context) {
 用户信息响应
 ```json
 {
-    "user": {
-        "id":1,
-        "name":"u1"
-    },
-    "meta": {
-        "role": "staff"
-    }
+  "user": {
+    "id":1,
+    "name":"u1"
+  },
+  "meta": {
+    "role": "staff"
+  }
 }
 ```
 

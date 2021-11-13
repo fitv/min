@@ -139,13 +139,13 @@ User Index output
 User Info output
 ```json
 {
-    "user": {
-        "id":1,
-        "name":"u1"
-    },
-    "meta": {
-        "role": "staff"
-    }
+  "user": {
+    "id":1,
+    "name":"u1"
+  },
+  "meta": {
+    "role": "staff"
+  }
 }
 ```
 
