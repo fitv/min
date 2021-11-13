@@ -1,9 +1,9 @@
-package zh
+package en
 
-import "github.com/fitv/min/core/lang"
+import "github.com/fitv/min/core/lang/en"
 
 func init() {
-	lang.Set("auth", map[string]interface{}{
+	en.Set("auth", map[string]interface{}{
 		"unauthorized":        "unauthorized",
 		"invalid_credentials": "invalid credentials",
 		"username_existed":    "username already exists",

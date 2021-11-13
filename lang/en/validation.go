@@ -1,9 +1,9 @@
-package zh
+package en
 
-import "github.com/fitv/min/core/lang"
+import "github.com/fitv/min/core/lang/en"
 
 func init() {
-	lang.Set("validation", map[string]interface{}{
+	en.Set("validation", map[string]interface{}{
 		"mobile": "{0} format is incorrect",
 	})
 }

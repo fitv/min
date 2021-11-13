@@ -1,6 +1,6 @@
 ## MIN - an API skeleton based on Gin
 
-[中文](README_zh.md)
+[简体中文](README_zh.md)
 
 ## Packages used
 - [Gin](https://github.com/gin-gonic/gin)

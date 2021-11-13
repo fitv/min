@@ -1,9 +1,9 @@
-package zh
+package en
 
-import "github.com/fitv/min/core/lang"
+import "github.com/fitv/min/core/lang/en"
 
 func init() {
-	lang.Set("user", map[string]interface{}{
+	en.Set("user", map[string]interface{}{
 		"not_found": "user not exists",
 		"username":  "username",
 		"password":  "password",

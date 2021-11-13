@@ -16,7 +16,6 @@ import (
 	"github.com/fitv/min/core/db"
 	"github.com/fitv/min/core/logger"
 	"github.com/fitv/min/core/redis"
-	_ "github.com/fitv/min/lang/zh"
 	"github.com/gin-gonic/gin"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"

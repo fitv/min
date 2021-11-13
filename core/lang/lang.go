@@ -8,14 +8,12 @@ import (
 
 var v *viper.Viper
 
-func init() {
-	v = viper.New()
+// Set define default language instance
+func Set(lang *viper.Viper) {
+	v = lang
 }
 
-func Set(key string, value interface{}) {
-	v.Set(key, value)
-}
-
+// Trans returns language translation by the given key
 func Trans(key string, args ...interface{}) string {
 	if !v.IsSet(key) {
 		return key

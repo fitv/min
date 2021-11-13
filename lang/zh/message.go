@@ -1,9 +1,9 @@
 package zh
 
-import "github.com/fitv/min/core/lang"
+import "github.com/fitv/min/core/lang/zh"
 
 func init() {
-	lang.Set("message", map[string]interface{}{
+	zh.Set("message", map[string]interface{}{
 		"success":         "操作成功",
 		"failed":          "操作失败",
 		"not_found":       "未找到",
