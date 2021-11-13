@@ -9,7 +9,7 @@ type LogConfig struct {
 	Path     string
 	Filename string
 	Level    string
-	Daily    bool
+	Daily    bool // Whether to generate a new log file every day
 }
 
 var Log = &LogConfig{

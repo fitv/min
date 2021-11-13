@@ -7,7 +7,7 @@ import (
 )
 
 type JwtConfig struct {
-	SigningKey string
+	SigningKey string // The name of the key used to sign the token in the request context
 	Secret     string
 	TTL        time.Duration
 }

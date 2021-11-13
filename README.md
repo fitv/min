@@ -79,40 +79,40 @@ global.Log().Error("error")
 package user
 
 import (
-	"context"
-	"strconv"
+  "context"
+  "strconv"
 
-	"github.com/fitv/min/app/resource"
-	"github.com/fitv/min/core/response"
-	"github.com/fitv/min/global"
-	"github.com/gin-gonic/gin"
+  "github.com/fitv/min/app/resource"
+  "github.com/fitv/min/core/response"
+  "github.com/fitv/min/global"
+  "github.com/gin-gonic/gin"
 )
 
 type User struct{}
 
 // Index returns a list of users with pagination
 func (User) Index(c *gin.Context) {
-	paginator, err := global.Ent().User.
+  paginator, err := global.Ent().User.
         Query().
         Paginate(context.Background(), c)
-	if err != nil {
-		response.HandleEntError(c, err)
-		return
-	}
-	resource.NewUserPaginator(c, paginator).Response()
+  if err != nil {
+    response.HandleEntError(c, err)
+    return
+  }
+  resource.NewUserPaginator(c, paginator).Response()
 }
 
 // Info returns user information
 func (User) Info(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Param("id"))
-	user, err := global.Ent().User.Get(context.Background(), id)
-	if err != nil {
-		response.HandleEntError(c, err)
-		return
-	}
-	resource.NewUser(c, user).Append(gin.H{
-		"role": "staff",
-	}).Wrap("user").Response()
+  id, _ := strconv.Atoi(c.Param("id"))
+  user, err := global.Ent().User.Get(context.Background(), id)
+  if err != nil {
+    response.HandleEntError(c, err)
+    return
+  }
+  resource.NewUser(c, user).Append(gin.H{
+    "role": "staff",
+  }).Wrap("user").Response()
 }
 ```
 
@@ -154,11 +154,11 @@ User Info output
 package user
 
 import (
-	"context"
+  "context"
 
-	"github.com/fitv/min/ent"
-	"github.com/fitv/min/ent/user"
-	"github.com/fitv/min/global"
+  "github.com/fitv/min/ent"
+  "github.com/fitv/min/ent/user"
+  "github.com/fitv/min/global"
 )
 
 type User struct{}
