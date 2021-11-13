@@ -93,8 +93,8 @@ type User struct{}
 // Index returns a list of users with pagination
 func (User) Index(c *gin.Context) {
   paginator, err := global.Ent().User.
-        Query().
-        Paginate(context.Background(), c)
+    Query().
+    Paginate(context.Background(), c)
   if err != nil {
     response.HandleEntError(c, err)
     return
@@ -164,15 +164,15 @@ import (
 type User struct{}
 
 func (User) Update() {
-    ctx := context.Background()
+  ctx := context.Background()
 
-    global.DB().WithTx(ctx, func(tx *ent.Tx) error {
-        user, err := tx.User.Query().Where(user.ID(1)).ForUpdate().First(ctx)
-        if err != nil {
-            return err
-        }
-        // do something...
-        return nil
-    })
+  global.DB().WithTx(ctx, func(tx *ent.Tx) error {
+    user, err := tx.User.Query().Where(user.ID(1)).ForUpdate().First(ctx)
+    if err != nil {
+        return err
+    }
+    // do something...
+    return nil
+  })
 }
 ```
