@@ -26,10 +26,9 @@ func NewUserPaginator(c *gin.Context, paginator *ent.Paginator) *resource.JsonRe
 
 func (r *User) ToMap(c *gin.Context) gin.H {
 	return gin.H{
-		"id":         r.user.ID,
-		"username":   r.user.Username,
-		"createdat":  r.user.CreatedAt.Format("2006-01-02 15:04:05"),
-		"updated_at": r.user.UpdatedAt.Format("2006-01-02 15:04:05"),
+		"id":       r.user.ID,
+		"username": r.user.Username,
+		// "tags": resource.When(r.user.Edges.Tags != nil, NewTags(c, r.user.Edges.Tags)),
 	}
 }
 

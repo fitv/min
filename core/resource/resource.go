@@ -77,13 +77,14 @@ func (r *JsonResource) resolve() interface{} {
 func (JsonResource) filter(dict gin.H) gin.H {
 	data := gin.H{}
 
-	for k, v := range dict {
-		if r, ok := v.(*JsonResource); ok {
-			data[k] = r.resolve()
-		} else if _, ok := v.(*MissingValue); ok {
-			continue
-		} else {
-			data[k] = v
+	for key, value := range dict {
+		switch resource := value.(type) {
+		case *JsonResource:
+			data[key] = resource.resolve()
+		case *MissingValue:
+			// skip
+		default:
+			data[key] = value
 		}
 	}
 	return data
@@ -112,14 +113,13 @@ func (r *JsonResource) Response() {
 	response.OK(r.ctx, obj)
 }
 
-// When determines if the given condition is true and executes the given callbacks.
-func When(ok bool, fn interface{}) interface{} {
+// When determines if the given condition is true then return the value or executes the given callback.
+func When(ok bool, value interface{}) interface{} {
 	if !ok {
 		return &MissingValue{}
 	}
-
-	if f, ok := fn.(func() interface{}); ok {
-		return f()
+	if fn, ok := value.(func() interface{}); ok {
+		return fn()
 	}
-	return fn
+	return value
 }
