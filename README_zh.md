@@ -28,7 +28,7 @@ git clone https://github.com/fitv/min.git
 
 复制配置文件
 ```
-cp config.example.yaml config.yaml
+cd min && cp config.example.yaml config.yaml
 ```
 
 运行应用

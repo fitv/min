@@ -28,7 +28,7 @@ git clone https://github.com/fitv/min.git
 
 Copy the configuration file
 ```
-cp config.example.yaml config.yaml
+cd min && cp config.example.yaml config.yaml
 ```
 
 Run Application
@@ -58,10 +58,10 @@ http://127.0.0.1:3000/api/v1/migrate
 import "github.com/fitv/min/global"
 
 global.Cache().Set("key", "value", time.Minute)
-global.Cache().Get("key")
-global.Cache().Has("key")
-global.Cache().TTL("key")
-global.Cache().Del("key")
+global.Cache().Get("key") // value
+global.Cache().Has("key") // true
+global.Cache().TTL("key") // time.Minute
+global.Cache().Del("key") // true
 ```
 
 ### Logger
