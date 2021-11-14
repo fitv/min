@@ -154,18 +154,18 @@ func (User) Info(c *gin.Context) {
 type Auth struct{}
 
 type UserFormLogin struct {
-	Username string `json:"username" binding:"required"`
-	Password string `json:"password" binding:"required"`
+  Username string `json:"username" binding:"required"`
+  Password string `json:"password" binding:"required"`
 }
 
 func (Auth) Login(c *gin.Context) {
-	var form UserFormLogin
+  var form UserFormLogin
 
-	err := c.ShouldBind(&form)
-	if err != nil {
-		response.HandleValidatorError(c, err)
-		return
-	}
+  err := c.ShouldBind(&form)
+  if err != nil {
+    response.HandleValidatorError(c, err)
+    return
+  }
   // do login...
 }
 ```
