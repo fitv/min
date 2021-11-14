@@ -5,6 +5,7 @@ import (
 
 	"github.com/fitv/min/core/app"
 	"github.com/fitv/min/core/service"
+	_ "github.com/fitv/min/ent/runtime"
 	"github.com/fitv/min/global"
 )
 

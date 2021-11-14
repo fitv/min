@@ -15,11 +15,13 @@ import (
 
 type Auth struct{}
 
+// UserFormLogin user login form
 type UserFormLogin struct {
 	Username string `json:"username" binding:"required,min=3,max=12"`
 	Password string `json:"password" binding:"required,min=6,max=20"`
 }
 
+// Login user login
 func (Auth) Login(c *gin.Context) {
 	var form UserFormLogin
 
@@ -45,12 +47,13 @@ func (Auth) Login(c *gin.Context) {
 
 	token, err := auth.SignToken(user.ID)
 	if err != nil {
-		response.BadRequest(c, lang.Trans("auth.error"))
+		response.ServerError(c)
 		return
 	}
 	response.OK(c, NewAccessToken(token))
 }
 
+// Register user register
 func (Auth) Register(c *gin.Context) {
 	var form UserFormLogin
 
@@ -60,28 +63,9 @@ func (Auth) Register(c *gin.Context) {
 		return
 	}
 
-	exist, err := global.Ent().User.
-		Query().
-		Where(user.Username(form.Username)).
-		Exist(context.Background())
-	if err != nil {
-		response.HandleEntError(c, err)
-		return
-	}
-	if exist {
-		response.BadRequest(c, lang.Trans("auth.username_existed"))
-		return
-	}
-
-	hashPassword, err := hash.Make(form.Password)
-	if err != nil {
-		response.ServerError(c)
-		return
-	}
-
 	user, err := global.Ent().User.Create().
 		SetUsername(form.Username).
-		SetPassword(string(hashPassword)).
+		SetPassword(form.Password).
 		Save(context.Background())
 	if err != nil {
 		response.HandleEntError(c, err)
@@ -90,15 +74,17 @@ func (Auth) Register(c *gin.Context) {
 	resource.NewUser(c, user).Response()
 }
 
+// RefreshToken refresh JWT token
 func (Auth) Refresh(c *gin.Context) {
 	token, err := auth.SignToken(auth.MustUID(c))
 	if err != nil {
-		response.BadRequest(c, lang.Trans("auth.error"))
+		response.ServerError(c)
 		return
 	}
 	response.OK(c, NewAccessToken(token))
 }
 
+// Profile get current authorized user info
 func (Auth) Profile(c *gin.Context) {
 	user, err := global.Ent().User.Get(context.Background(), auth.MustUID(c))
 	if err != nil {

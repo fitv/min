@@ -15,8 +15,12 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-var regexEntNotFoundLabel = regexp.MustCompile(`^ent: (\w+) not found$`)
-var regexValidatorLabel = regexp.MustCompile(`^(\w+)Form`)
+var (
+	// regexEntNotFoundLabel match ent label from ent not found error
+	regexEntNotFoundLabel = regexp.MustCompile(`^ent: (\w+) not found$`)
+	// regexValidatorLabel match validator label from struct name, eg: "xxFrom", "xxFromFoo"
+	regexValidatorLabel = regexp.MustCompile(`^(\w+)Form`)
+)
 
 func OK(c *gin.Context, obj interface{}) {
 	if message, ok := obj.(string); ok {
@@ -86,9 +90,8 @@ func HandleValidatorError(c *gin.Context, err error) {
 		return
 	}
 
-	var label string
-	var message string
-	errMap := make(map[string]string)
+	var label, message string
+	errors := make(map[string]string)
 	matches := regexValidatorLabel.FindStringSubmatch(errs[0].StructNamespace())
 	if len(matches) > 1 {
 		label = str.ToSnakeCase(matches[1])
@@ -98,13 +101,13 @@ func HandleValidatorError(c *gin.Context, err error) {
 		field := str.ToSnakeCase(err.Field())
 		name := lang.Trans(label + "." + field)
 
-		errMap[field] = strings.Replace(err.Translate(global.Trans()), err.Field(), name, 1)
+		errors[field] = strings.Replace(err.Translate(global.Trans()), err.Field(), name, 1)
 		if i == 0 {
-			message = errMap[field]
+			message = errors[field]
 		}
 	}
 	c.JSON(http.StatusUnprocessableEntity, gin.H{
 		"message": message,
-		"errors":  errMap,
+		"errors":  errors,
 	})
 }
