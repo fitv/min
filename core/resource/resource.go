@@ -14,6 +14,11 @@ const (
 	TypePaginator
 )
 
+var (
+	DefaultWrapKey   = "data"
+	DefaultAppendKey = "meta"
+)
+
 type Resource interface {
 	ToMap(*gin.Context) gin.H
 	ToArray(*gin.Context) []*JsonResource
@@ -78,9 +83,9 @@ func (JsonResource) filter(dict gin.H) gin.H {
 	data := gin.H{}
 
 	for key, value := range dict {
-		switch resource := value.(type) {
+		switch v := value.(type) {
 		case *JsonResource:
-			data[key] = resource.resolve()
+			data[key] = v.resolve()
 		case *MissingValue:
 			// skip
 		default:
@@ -99,15 +104,15 @@ func (r *JsonResource) MarshalJSON() ([]byte, error) {
 func (r *JsonResource) Response() {
 	obj := r.resolve()
 
-	wrapKey := "data"
+	wrapKey := DefaultWrapKey
 	if len(r.wrap) > 0 {
 		wrapKey = r.wrap
 	}
 
 	if r.append != nil {
 		obj = gin.H{
-			wrapKey: obj,
-			"meta":  r.append,
+			wrapKey:          obj,
+			DefaultAppendKey: r.append,
 		}
 	}
 	response.OK(r.ctx, obj)
