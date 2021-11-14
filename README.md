@@ -116,7 +116,7 @@ func (User) Info(c *gin.Context) {
 }
 ```
 
-User Index output
+User Index response
 ```json
 {
   "current_page": 1,
@@ -136,7 +136,7 @@ User Index output
 }
 ```
 
-User Info output
+User Info response
 ```json
 {
   "user": {
@@ -145,6 +145,38 @@ User Info output
   },
   "meta": {
     "role": "staff"
+  }
+}
+```
+
+### From Validator
+```go
+type Auth struct{}
+
+type UserFormLogin struct {
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
+func (Auth) Login(c *gin.Context) {
+	var form UserFormLogin
+
+	err := c.ShouldBind(&form)
+	if err != nil {
+		response.HandleValidatorError(c, err)
+		return
+	}
+  // do login...
+}
+```
+Verification failure response
+```json
+// status code: 422
+{
+  "message": "username is a required field",
+  "errors": {
+    "password": "password is a required field",
+    "username": "username is a required field"
   }
 }
 ```
@@ -172,7 +204,6 @@ func (User) Update() {
         return err
     }
     // do something...
-    return nil
   })
 }
 ```

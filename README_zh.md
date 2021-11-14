@@ -149,6 +149,38 @@ func (User) Info(c *gin.Context) {
 }
 ```
 
+### 表单验证
+```go
+type Auth struct{}
+
+type UserFormLogin struct {
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
+func (Auth) Login(c *gin.Context) {
+	var form UserFormLogin
+
+	err := c.ShouldBind(&form)
+	if err != nil {
+		response.HandleValidatorError(c, err)
+		return
+	}
+  // do login...
+}
+```
+验证失败响应
+```json
+// status code: 422
+{
+  "message": "姓名为必填字段",
+  "errors": {
+    "password": "密码为必填字段",
+    "username": "姓名为必填字段"
+  }
+}
+```
+
 ### 数据库事务
 ```go
 package user
@@ -172,7 +204,6 @@ func (User) Update() {
         return err
     }
     // do something...
-    return nil
   })
 }
 ```
