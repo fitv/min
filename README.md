@@ -169,9 +169,8 @@ func (Auth) Login(c *gin.Context) {
   // do login...
 }
 ```
-Verification failure response
+Verification failure response, return status code `422`
 ```json
-// status code: 422
 {
   "message": "username is a required field",
   "errors": {

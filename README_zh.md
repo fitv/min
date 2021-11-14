@@ -169,9 +169,8 @@ func (Auth) Login(c *gin.Context) {
   // do login...
 }
 ```
-验证失败响应
+验证失败响应，返回状态码`422`
 ```json
-// status code: 422
 {
   "message": "姓名为必填字段",
   "errors": {
