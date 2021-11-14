@@ -9,6 +9,7 @@
 - [jwt-go](https://github.com/golang-jwt/jwt)
 - [go-redis](https://github.com/go-redis/redis)
 - [validator](https://github.com/go-playground/validator)
+- [swagger-ui](https://github.com/swagger-api/swagger-ui)
 
 ## 特性
  - 快速构建 `RESTful API`
@@ -19,6 +20,7 @@
  - `ent` 模型分页器
  - API 资源转换器
  - 多语言翻译支持
+ - Swagger UI (渲染 YAML 文件)
 
 ## 安装
 克隆仓库
@@ -41,7 +43,7 @@ go run main.go
 go build -o min main.go
 ```
 
-API文档地址
+API 文档地址
 ```
 http://127.0.0.1:3000/apidoc
 ```

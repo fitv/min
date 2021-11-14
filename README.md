@@ -9,6 +9,7 @@
 - [jwt-go](https://github.com/golang-jwt/jwt)
 - [go-redis](https://github.com/go-redis/redis)
 - [validator](https://github.com/go-playground/validator)
+- [swagger-ui](https://github.com/swagger-api/swagger-ui)
 
 ## Features
  - Easily build your `RESTful APIs`
@@ -19,6 +20,7 @@
  - `ent` Paginator
  - API Resource Transformer
  - Multi-language translation support
+ - Swagger UI (render YAML file)
 
 ## Installation
 Clone repository
