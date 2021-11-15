@@ -17,7 +17,7 @@
  - `JWT` Authorization
  - Configuration
  - Cache based on `Redis`
- - Logger
+ - Logger based on `Zap`
  - `ent` Paginator
  - API Resource Transformer
  - Multi-language translation support
