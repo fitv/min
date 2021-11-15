@@ -10,6 +10,7 @@ import (
 
 var _ Driver = (*FileLogger)(nil)
 
+// FileLogger is a file logger struct.
 type FileLogger struct {
 	mux      sync.Mutex
 	file     *os.File
@@ -33,27 +34,31 @@ func NewFileLogger(opt *Option) *FileLogger {
 }
 
 // WithFields adds fields to the logger.
-func (l *FileLogger) Write(p []byte) (n int, err error) {
+func (l *FileLogger) Write(level Level, args ...interface{}) error {
 	l.mux.Lock()
 	defer l.mux.Unlock()
 
 	if l.file == nil {
 		if err := l.openFile(); err != nil {
-			return 0, err
+			return err
 		}
 	}
 	if l.daily && today() != l.date {
 		if err := l.close(); err != nil {
-			return 0, err
+			return err
 		}
 		l.date = today()
 		if err := l.openFile(); err != nil {
 			l.date = ""
-			return 0, err
+			return err
 		}
 	}
 
-	return l.file.Write(p)
+	datetime := time.Now().Format("2006/01/02 15:04:05")
+	args = append([]interface{}{datetime, fmt.Sprintf("[%s]", level)}, args...)
+
+	_, err := l.file.Write([]byte(fmt.Sprintln(args...)))
+	return err
 }
 
 // Close closes the logger.
@@ -85,9 +90,4 @@ func (l *FileLogger) openFile() error {
 	}
 	l.file = file
 	return nil
-}
-
-// today returns the current date in YYYY-MM-DD format.
-func today() string {
-	return time.Now().Format("20060102")
 }

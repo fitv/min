@@ -9,7 +9,7 @@ type AppConfig struct {
 	Addr   string
 	Port   int
 	Debug  bool
-	Locale string
+	Locale string // Supports "en", "zh"
 }
 
 var App = &AppConfig{

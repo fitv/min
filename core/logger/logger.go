@@ -7,7 +7,7 @@ import (
 )
 
 type Driver interface {
-	Write([]byte) (int, error)
+	Write(level Level, args ...interface{}) error
 	Close() error
 }
 
@@ -29,32 +29,29 @@ func New(level Level, driver Driver) *Logger {
 	}
 }
 
-func (l *Logger) Debug(a ...interface{}) {
-	l.Log(DebugLevel, a)
+func (l *Logger) Debug(args ...interface{}) {
+	l.Log(DebugLevel, args)
 }
 
-func (l *Logger) Info(a ...interface{}) {
-	l.Log(InfoLevel, a)
+func (l *Logger) Info(args ...interface{}) {
+	l.Log(InfoLevel, args)
 }
 
-func (l *Logger) Warn(a ...interface{}) {
-	l.Log(WarnLevel, a)
+func (l *Logger) Warn(args ...interface{}) {
+	l.Log(WarnLevel, args)
 }
 
-func (l *Logger) Error(a ...interface{}) {
-	l.Log(ErrorLevel, a)
+func (l *Logger) Error(args ...interface{}) {
+	l.Log(ErrorLevel, args)
 }
 
 // Log writes a message to the log using the given level.
-func (l *Logger) Log(level Level, a ...interface{}) {
+func (l *Logger) Log(level Level, args ...interface{}) {
 	if level < l.level {
 		return
 	}
 
-	datetime := time.Now().Format("2006/01/02 15:04:05")
-	a = append([]interface{}{datetime, fmt.Sprintf("[%s]", level)}, a...)
-
-	_, err := l.driver.Write([]byte(fmt.Sprintln(a...)))
+	err := l.driver.Write(level, args...)
 	if err != nil {
 		log.Println(fmt.Errorf("write log error: %w", err))
 	}
@@ -62,4 +59,9 @@ func (l *Logger) Log(level Level, a ...interface{}) {
 
 func (l *Logger) Close() error {
 	return l.driver.Close()
+}
+
+// today returns the current date in YYYY-MM-DD format.
+func today() string {
+	return time.Now().Format("20060102")
 }

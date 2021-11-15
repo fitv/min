@@ -10,10 +10,10 @@ const (
 )
 
 var LevelMap = map[Level]string{
-	DebugLevel: "DEBUG",
-	InfoLevel:  "INFO",
-	WarnLevel:  "WARN",
-	ErrorLevel: "ERROR",
+	DebugLevel: "debug",
+	InfoLevel:  "info",
+	WarnLevel:  "warn",
+	ErrorLevel: "error",
 }
 
 func (l Level) String() string {

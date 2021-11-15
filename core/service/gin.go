@@ -5,10 +5,10 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"strings"
 
 	"github.com/fitv/min/config"
 	"github.com/fitv/min/core/app"
+	"github.com/fitv/min/core/request"
 	"github.com/fitv/min/core/response"
 	"github.com/gin-gonic/gin"
 )
@@ -38,11 +38,10 @@ func (Gin) Register(app *app.Application) {
 
 	// Register Logger and Recovery middleware
 	app.Gin.Use(gin.Logger(), gin.CustomRecovery(func(c *gin.Context, err interface{}) {
-		if strings.HasPrefix(c.Request.URL.Path, "/api/") {
+		if request.IsApiRoute(c) {
 			response.ServerError(c)
 			return
 		}
-
 		c.HTML(http.StatusInternalServerError, "500.tmpl", gin.H{})
 		c.Abort()
 	}))

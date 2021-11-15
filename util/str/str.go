@@ -12,7 +12,10 @@ const (
 	pool = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 )
 
-var regexCamel = regexp.MustCompile("([a-z])([A-Z])")
+var (
+	// regexCamel is a regular expression to match camel case.
+	regexCamel = regexp.MustCompile("([a-z])([A-Z])")
+)
 
 // Len returns the length of the utf8 string.
 func Len(str string) int {

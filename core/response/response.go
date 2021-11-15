@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
-	"runtime/debug"
 	"strings"
 
 	"github.com/fitv/min/core/lang"
@@ -79,7 +78,7 @@ func HandleEntError(c *gin.Context, err error) {
 		}
 		NotFound(c, lang.Trans(label+".not_found"))
 	default:
-		global.Log().Error(fmt.Errorf("ent error: %w\n%s", err, string(debug.Stack())))
+		global.Log().Error(fmt.Errorf("ent error: %w", err))
 		ServerError(c)
 	}
 }
