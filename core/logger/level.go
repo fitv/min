@@ -9,6 +9,7 @@ const (
 	ErrorLevel
 )
 
+// LevelMap maps a level to a string.
 var LevelMap = map[Level]string{
 	DebugLevel: "debug",
 	InfoLevel:  "info",
@@ -16,6 +17,7 @@ var LevelMap = map[Level]string{
 	ErrorLevel: "error",
 }
 
+// String returns the string representation of the level.
 func (l Level) String() string {
 	return LevelMap[l]
 }

@@ -5,6 +5,7 @@
 ## Packages used
 - [Gin](https://github.com/gin-gonic/gin)
 - [ent](https://entgo.io/ent)
+- [zap](https://github.com/uber-go/zap)
 - [viper](https://github.com/spf13/viper)
 - [jwt-go](https://github.com/golang-jwt/jwt)
 - [go-redis](https://github.com/go-redis/redis)

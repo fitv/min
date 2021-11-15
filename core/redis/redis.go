@@ -7,10 +7,12 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
+// Redis is a Redis client wrapper.
 type Redis struct {
 	client *redis.Client
 }
 
+// Option is the Redis option.
 type Option struct {
 	Addr     string
 	Password string
