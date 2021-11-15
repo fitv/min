@@ -12,7 +12,8 @@ var _ Driver = (*ZapLogger)(nil)
 
 // ZapLogger is a logger implementation that uses zap.
 type ZapLogger struct {
-	zap *zap.Logger
+	zap   *zap.Logger
+	sugar *zap.SugaredLogger
 }
 
 // NewZapLogger creates a new ZapLogger.
@@ -32,20 +33,23 @@ func NewZapLogger(opt *Option) (*ZapLogger, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &ZapLogger{zap: logger}, nil
+	return &ZapLogger{
+		zap:   logger,
+		sugar: logger.Sugar(),
+	}, nil
 }
 
 // Write writes a message to the log.
 func (l *ZapLogger) Write(level Level, args ...interface{}) error {
 	switch level {
 	case DebugLevel:
-		l.zap.Sugar().Debug(args...)
+		l.sugar.Debug(args...)
 	case InfoLevel:
-		l.zap.Sugar().Info(args...)
+		l.sugar.Info(args...)
 	case WarnLevel:
-		l.zap.Sugar().Warn(args...)
+		l.sugar.Warn(args...)
 	case ErrorLevel:
-		l.zap.Sugar().Error(args...)
+		l.sugar.Error(args...)
 	default:
 		panic("logger: unknown level")
 	}
