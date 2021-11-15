@@ -9,7 +9,7 @@ import (
 
 	"github.com/fitv/min/config"
 	"github.com/fitv/min/core/app"
-	"github.com/fitv/min/core/lang"
+	"github.com/fitv/min/core/response"
 	"github.com/gin-gonic/gin"
 )
 
@@ -39,9 +39,7 @@ func (Gin) Register(app *app.Application) {
 	// Register Logger and Recovery middleware
 	app.Gin.Use(gin.Logger(), gin.CustomRecovery(func(c *gin.Context, err interface{}) {
 		if strings.HasPrefix(c.Request.URL.Path, "/api/") {
-			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-				"message": lang.Trans("message.server_error"),
-			})
+			response.ServerError(c)
 			return
 		}
 

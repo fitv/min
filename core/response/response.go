@@ -24,45 +24,47 @@ var (
 
 func OK(c *gin.Context, obj interface{}) {
 	if message, ok := obj.(string); ok {
-		c.JSON(http.StatusOK, gin.H{
+		obj = gin.H{
 			"message": message,
-		})
-		return
+		}
 	}
-	c.JSON(http.StatusOK, obj)
+	c.AbortWithStatusJSON(http.StatusOK, obj)
 }
 
 func BadRequest(c *gin.Context, message string) {
-	c.JSON(http.StatusBadRequest, gin.H{
+	c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 		"message": message,
+	})
+}
+
+func Unauthorized(c *gin.Context) {
+	c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+		"message": lang.Trans("message.unauthorized"),
+	})
+}
+
+func Forbidden(c *gin.Context) {
+	c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
+		"message": lang.Trans("message.forbidden"),
 	})
 }
 
 func NotFound(c *gin.Context, message string) {
-	c.JSON(http.StatusNotFound, gin.H{
+	c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 		"message": message,
 	})
 }
 
-func Forbidden(c *gin.Context, messages ...string) {
-	message := lang.Trans("message.forbidden")
-
-	if len(messages) > 0 {
-		message = messages[0]
-	}
-	c.JSON(http.StatusForbidden, gin.H{
+func UnprocessableEntity(c *gin.Context, message string, errors map[string]string) {
+	c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
 		"message": message,
+		"errors":  errors,
 	})
 }
 
-func ServerError(c *gin.Context, messages ...string) {
-	message := lang.Trans("message.server_error")
-
-	if len(messages) > 0 {
-		message = messages[0]
-	}
-	c.JSON(http.StatusInternalServerError, gin.H{
-		"message": message,
+func ServerError(c *gin.Context) {
+	c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+		"message": lang.Trans("message.server_error"),
 	})
 }
 
@@ -106,8 +108,5 @@ func HandleValidatorError(c *gin.Context, err error) {
 			message = errors[field]
 		}
 	}
-	c.JSON(http.StatusUnprocessableEntity, gin.H{
-		"message": message,
-		"errors":  errors,
-	})
+	UnprocessableEntity(c, message, errors)
 }

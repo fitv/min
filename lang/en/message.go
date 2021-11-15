@@ -7,6 +7,7 @@ func init() {
 		"success":         "success",
 		"failed":          "failed",
 		"not_found":       "not found",
+		"unauthorized":    "unauthorized",
 		"forbidden":       "forbidden",
 		"server_error":    "server error",
 		"validate_failed": "verification failed",

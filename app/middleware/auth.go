@@ -1,12 +1,11 @@
 package middleware
 
 import (
-	"net/http"
 	"strings"
 
 	"github.com/fitv/min/config"
 	"github.com/fitv/min/core/auth"
-	"github.com/fitv/min/core/lang"
+	"github.com/fitv/min/core/response"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,9 +19,7 @@ func Auth() gin.HandlerFunc {
 
 		claims, err := auth.VerifyToken(token)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-				"message": lang.Trans("auth.unauthorized"),
-			})
+			response.Unauthorized(c)
 			return
 		}
 		c.Set(config.Jwt.SigningKey, claims)
