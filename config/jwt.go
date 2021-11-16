@@ -14,6 +14,6 @@ type JwtConfig struct {
 
 var Jwt = &JwtConfig{
 	SigningKey: "jwtClaims",
-	TTL:        time.Hour * 1,
 	Secret:     config.GetString("jwt.secret"),
+	TTL:        time.Hour * 1,
 }

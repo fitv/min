@@ -9,8 +9,8 @@ type LogConfig struct {
 	Driver   string // Supports: "zap", "file"
 	Path     string
 	Filename string
-	Level    string
-	Daily    bool // Supported driver: "file", Whether to generate a new log file every day
+	Level    string // Supports: "debug", "info", "warn", "error"
+	Daily    bool   // Supported driver: "file", Whether to generate a new log file every day
 }
 
 var Log = &LogConfig{
