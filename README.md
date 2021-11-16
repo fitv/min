@@ -81,8 +81,8 @@ global.Log().Error("error")
 ```go
 import "github.com/fitv/min/core/lang"
 
-lang.Trans("message.hello") // 你好
-lang.Local("en").Trans("message.hello") // hello
+lang.Trans("hello.world") // world
+lang.Local("zh").Trans("hello.world") // 世界
 ```
 
 ### Paginator & API Resource Transformer
