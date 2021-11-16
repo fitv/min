@@ -82,7 +82,7 @@ global.Log().Error("error")
 import "github.com/fitv/min/core/lang"
 
 lang.Trans("hello.world") // 世界
-lang.Local("en").Trans("hello.world") // world
+lang.Locale("en").Trans("hello.world") // world
 ```
 
 ### 分页及 API 资源转换
