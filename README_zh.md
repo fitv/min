@@ -77,6 +77,14 @@ global.Log().Warn("warn")
 global.Log().Error("error")
 ```
 
+### 多语言翻译
+```go
+import "github.com/fitv/min/core/lang"
+
+lang.Trans("message.hello") // 你好
+lang.Local("en").Trans("message.hello") // hello
+```
+
 ### 分页及 API 资源转换
 ```go
 package user

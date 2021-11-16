@@ -1,19 +1,17 @@
 package en
 
 import (
-	"github.com/spf13/viper"
+	"github.com/fitv/min/core/lang"
 )
 
-var lang *viper.Viper
+var trans *lang.Translator
 
 func init() {
-	lang = viper.New()
+	trans = lang.NewTranslator()
+
+	lang.Set("en", trans)
 }
 
 func Set(key string, value interface{}) {
-	lang.Set(key, value)
-}
-
-func Lang() *viper.Viper {
-	return lang
+	trans.Set(key, value)
 }

@@ -6,8 +6,6 @@ import (
 	"github.com/fitv/min/config"
 	"github.com/fitv/min/core/app"
 	"github.com/fitv/min/core/lang"
-	langen "github.com/fitv/min/core/lang/en"
-	langzh "github.com/fitv/min/core/lang/zh"
 	_ "github.com/fitv/min/lang/en"
 	_ "github.com/fitv/min/lang/zh"
 	"github.com/gin-gonic/gin/binding"
@@ -29,8 +27,6 @@ func (Translator) Register(app *app.Application) {
 
 	switch config.App.Locale {
 	case "en":
-		lang.Set(langen.Lang())
-
 		en := en.New()
 		uni := ut.New(en, en)
 		trans, _ = uni.GetTranslator("en")
@@ -40,8 +36,6 @@ func (Translator) Register(app *app.Application) {
 		}
 		en_translations.RegisterDefaultTranslations(validate, trans)
 	case "zh":
-		lang.Set(langzh.Lang())
-
 		en := en.New()
 		zh := zh.New()
 		uni := ut.New(en, zh, en)
@@ -55,4 +49,5 @@ func (Translator) Register(app *app.Application) {
 	}
 
 	app.Translator = trans
+	lang.DefaultLocale = config.App.Locale
 }
