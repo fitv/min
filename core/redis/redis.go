@@ -20,18 +20,18 @@ type Option struct {
 }
 
 // New returns a new Redis client.
-func New(opt *Option) *Redis {
+func New(opt *Option) (*Redis, error) {
 	client := redis.NewClient(&redis.Options{
 		Addr:     opt.Addr,
 		Password: opt.Password,
 		DB:       opt.DB,
 	})
 
-	_, err := client.Ping(context.Background()).Result()
+	err := client.Ping(context.Background()).Err()
 	if err != nil {
-		panic(fmt.Errorf("redis connect error: %w", err))
+		return nil, fmt.Errorf("redis ping error: %w", err)
 	}
-	return &Redis{client: client}
+	return &Redis{client: client}, nil
 }
 
 // Client returns the Redis client.

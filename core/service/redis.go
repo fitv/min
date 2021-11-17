@@ -13,11 +13,16 @@ type Redis struct {
 }
 
 func (Redis) Register(app *app.Application) {
-	app.Redis = redis.New(&redis.Option{
+	var err error
+
+	app.Redis, err = redis.New(&redis.Option{
 		Addr:     fmt.Sprintf("%s:%d", config.Redis.Host, config.Redis.Port),
 		Password: config.Redis.Password,
 		DB:       config.Redis.Database,
 	})
+	if err != nil {
+		panic(fmt.Errorf("redis init error: %w", err))
+	}
 
 	app.AddClose(func() {
 		app.Redis.Close()

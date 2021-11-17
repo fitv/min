@@ -28,7 +28,7 @@ func NewRedisCache(client *redis.Client, opt *Option) *RedisCache {
 
 // Get returns the value for the given key in cache, panic when an error occurs.
 func (r *RedisCache) Get(key string) (string, bool) {
-	val, err := r.client.Get(r.ctx, r.Key(key)).Result()
+	val, err := r.client.Get(r.ctx, r.realKey(key)).Result()
 	if err == redis.Nil {
 		return "", false
 	}
@@ -40,7 +40,7 @@ func (r *RedisCache) Get(key string) (string, bool) {
 
 // Set sets the value for the given key into cache, panic when an error occurs.
 func (r *RedisCache) Set(key string, value interface{}, ttl time.Duration) {
-	err := r.client.SetEX(r.ctx, r.Key(key), value, ttl).Err()
+	err := r.client.SetEX(r.ctx, r.realKey(key), value, ttl).Err()
 	if err != nil {
 		panic(fmt.Errorf("redis set error: %w", err))
 	}
@@ -48,7 +48,7 @@ func (r *RedisCache) Set(key string, value interface{}, ttl time.Duration) {
 
 // Has check if the cache key exists, panic when an error occurs.
 func (r *RedisCache) Has(key string) bool {
-	res, err := r.client.Exists(r.ctx, r.Key(key)).Result()
+	res, err := r.client.Exists(r.ctx, r.realKey(key)).Result()
 	if err != nil {
 		panic(fmt.Errorf("redis exists error: %w", err))
 	}
@@ -57,7 +57,7 @@ func (r *RedisCache) Has(key string) bool {
 
 // TTL returns the remaining time to live of a key, panic when an error occurs.
 func (r *RedisCache) TTL(key string) time.Duration {
-	ttl, err := r.client.TTL(r.ctx, r.Key(key)).Result()
+	ttl, err := r.client.TTL(r.ctx, r.realKey(key)).Result()
 	if err != nil {
 		panic(fmt.Errorf("redis ttl error: %w", err))
 	}
@@ -69,14 +69,14 @@ func (r *RedisCache) TTL(key string) time.Duration {
 
 // Del deletes the given key, panic when an error occurs.
 func (r *RedisCache) Del(key string) bool {
-	val, err := r.client.Del(r.ctx, r.Key(key)).Result()
+	val, err := r.client.Del(r.ctx, r.realKey(key)).Result()
 	if err != nil {
 		panic(fmt.Errorf("redis del error: %w", err))
 	}
 	return val > 0
 }
 
-// Key returns the key with prefix.
-func (r *RedisCache) Key(key string) string {
+// realKey returns the key with prefix.
+func (r *RedisCache) realKey(key string) string {
 	return r.prefix + key
 }

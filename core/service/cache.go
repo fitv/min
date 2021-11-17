@@ -16,11 +16,15 @@ type Cache struct {
 func (Cache) Register(app *app.Application) {
 	switch config.Cache.Driver {
 	case "redis":
-		redis := redis.New(&redis.Option{
+		redis, err := redis.New(&redis.Option{
 			Addr:     fmt.Sprintf("%s:%d", config.Redis.Host, config.Redis.Port),
 			Password: config.Redis.Password,
 			DB:       config.Cache.Database,
 		})
+		if err != nil {
+			panic(fmt.Errorf("redis init error: %w", err))
+		}
+
 		app.AddClose(func() {
 			redis.Close()
 		})

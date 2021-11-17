@@ -213,7 +213,7 @@ func (User) Update() {
     if err != nil {
         return err
     }
-    // do something...
+    // do update...
   })
 }
 ```
