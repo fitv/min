@@ -9,7 +9,9 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-var regexpMobile = regexp.MustCompile("^1[3-9][0-9]{9}$")
+var (
+	regexpMobile = regexp.MustCompile("^1[3-9][0-9]{9}$")
+)
 
 type Validator struct {
 	Service

@@ -30,7 +30,6 @@ func (Translator) Register(app *app.Application) {
 		en := en.New()
 		uni := ut.New(en, en)
 		trans, _ = uni.GetTranslator("en")
-
 		for _, validation := range app.Validations {
 			validation(validate, trans)
 		}

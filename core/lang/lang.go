@@ -22,9 +22,5 @@ func Locale(locale string) *Translator {
 
 // Trans returns language translation by the given key
 func Trans(key string, args ...interface{}) string {
-	trans, ok := transMap[DefaultLocale]
-	if ok {
-		return trans.Trans(key, args...)
-	}
-	return emptyTrans.Trans(key, args...)
+	return Locale(DefaultLocale).Trans(key, args...)
 }
