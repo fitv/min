@@ -60,8 +60,6 @@ http://127.0.0.1:3000/api/v1/migrate
 ```go
 import "github.com/fitv/min/global"
 
-ctx := context.Background()
-
 global.Cache().Set(ctx, "key", "value", time.Minute)
 global.Cache().Get(ctx, "key") // value
 global.Cache().Has(ctx, "key") // true
@@ -107,7 +105,7 @@ type User struct{}
 func (User) Index(c *gin.Context) {
   paginator, err := global.Ent().User.
     Query().
-    Paginate(context.Background(), c)
+    Paginate(ctx, c)
   if err != nil {
     response.HandleEntError(c, err)
     return
@@ -118,7 +116,7 @@ func (User) Index(c *gin.Context) {
 // Info returns user information
 func (User) Info(c *gin.Context) {
   id, _ := strconv.Atoi(c.Param("id"))
-  user, err := global.Ent().User.Get(context.Background(), id)
+  user, err := global.Ent().User.Get(ctx, id)
   if err != nil {
     response.HandleEntError(c, err)
     return
@@ -208,8 +206,6 @@ import (
 type User struct{}
 
 func (User) Update() {
-  ctx := context.Background()
-
   global.DB().WithTx(ctx, func(tx *ent.Tx) error {
     user, err := tx.User.Query().Where(user.ID(1)).ForUpdate().First(ctx)
     if err != nil {
