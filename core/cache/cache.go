@@ -1,14 +1,17 @@
 package cache
 
-import "time"
+import (
+	"context"
+	"time"
+)
 
 // Cache interface
 type Cache interface {
-	Get(key string) (string, bool)
-	Set(key string, value interface{}, ttl time.Duration)
-	Has(key string) bool
-	Del(key string) bool
-	TTL(key string) time.Duration
+	Get(ctx context.Context, key string) (string, bool)
+	Set(ctx context.Context, key string, value interface{}, ttl time.Duration)
+	Has(ctx context.Context, key string) bool
+	Del(ctx context.Context, key string) bool
+	TTL(ctx context.Context, key string) time.Duration
 }
 
 // Options for cache

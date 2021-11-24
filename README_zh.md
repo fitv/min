@@ -60,11 +60,13 @@ http://127.0.0.1:3000/api/v1/migrate
 ```go
 import "github.com/fitv/min/global"
 
-global.Cache().Set("key", "value", time.Minute)
-global.Cache().Get("key") // value
-global.Cache().Has("key") // true
-global.Cache().TTL("key") // time.Minute
-global.Cache().Del("key") // true
+ctx := context.Background()
+
+global.Cache().Set(ctx, "key", "value", time.Minute)
+global.Cache().Get(ctx, "key") // value
+global.Cache().Has(ctx, "key") // true
+global.Cache().TTL(ctx, "key") // time.Minute
+global.Cache().Del(ctx, "key") // true
 ```
 
 ### 日志
