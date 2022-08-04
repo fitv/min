@@ -79,10 +79,10 @@ global.Log().Error("error")
 
 ### Multi-language translation
 ```go
-import "github.com/fitv/min/core/lang"
+import "github.com/fitv/min/global"
 
-lang.Trans("hello.world") // world
-lang.Locale("zh").Trans("hello.world") // 世界
+global.Lang().Trans("hello.world") // world
+global.Lang().Locale("zh").Trans("hello.world") // 世界
 ```
 
 ### Paginator & API Resource Transformer

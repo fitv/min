@@ -79,10 +79,10 @@ global.Log().Error("error")
 
 ### 多语言翻译
 ```go
-import "github.com/fitv/min/core/lang"
+import "github.com/fitv/min/global"
 
-lang.Trans("hello.world") // 世界
-lang.Locale("en").Trans("hello.world") // world
+global.Lang().Trans("hello.world") // 世界
+global.Lang().Locale("en").Trans("hello.world") // world
 ```
 
 ### 分页及 API 资源转换
