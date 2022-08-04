@@ -3,7 +3,6 @@ package v1
 import (
 	"context"
 
-	"github.com/fitv/min/core/lang"
 	"github.com/fitv/min/core/response"
 	"github.com/fitv/min/global"
 	"github.com/gin-gonic/gin"
@@ -22,5 +21,5 @@ func (Migrate) Index(c *gin.Context) {
 		response.HandleEntError(c, err)
 		return
 	}
-	response.OK(c, lang.Trans("message.success"))
+	response.OK(c, global.Lang().Trans("message.success"))
 }

@@ -3,6 +3,7 @@ package global
 import (
 	"embed"
 
+	"github.com/fitv/go-i18n"
 	"github.com/fitv/min/core/app"
 	"github.com/fitv/min/core/cache"
 	"github.com/fitv/min/core/db"
@@ -36,6 +37,10 @@ func Redis() *redis.Client {
 
 func Log() *logger.Logger {
 	return App.Logger
+}
+
+func Lang() *i18n.I18n {
+	return App.Lang
 }
 
 func Trans() ut.Translator {

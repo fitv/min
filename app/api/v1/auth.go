@@ -5,7 +5,6 @@ import (
 
 	"github.com/fitv/min/app/resource"
 	"github.com/fitv/min/core/auth"
-	"github.com/fitv/min/core/lang"
 	"github.com/fitv/min/core/response"
 	"github.com/fitv/min/ent/user"
 	"github.com/fitv/min/global"
@@ -41,7 +40,7 @@ func (Auth) Login(c *gin.Context) {
 	}
 
 	if !hash.Check(user.Password, form.Password) {
-		response.BadRequest(c, lang.Trans("auth.invalid_credentials"))
+		response.BadRequest(c, global.Lang().Trans("auth.invalid_credentials"))
 		return
 	}
 

@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/fitv/go-i18n"
 	"github.com/fitv/min/config"
 	"github.com/fitv/min/core/cache"
 	"github.com/fitv/min/core/db"
@@ -33,6 +34,7 @@ type Application struct {
 	Redis       *redis.Redis
 	Logger      *logger.Logger
 	Translator  ut.Translator
+	Lang        *i18n.I18n
 	Services    []Service
 	Routes      []Route
 	Validations []Validation
@@ -103,7 +105,7 @@ func (app *Application) bootService() {
 // listenAndServe start http server
 func (app *Application) listenAndServe() {
 	srv := &http.Server{
-		MaxHeaderBytes: 1 << 20,
+		MaxHeaderBytes: 1 << 20, // 1MB
 		ReadTimeout:    time.Second * 15,
 		WriteTimeout:   time.Second * 15,
 		Addr:           fmt.Sprintf("%s:%d", config.App.Addr, config.App.Port),

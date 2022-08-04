@@ -4,7 +4,6 @@ import (
 	"regexp"
 
 	"github.com/fitv/min/core/app"
-	"github.com/fitv/min/core/lang"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 )
@@ -24,7 +23,7 @@ func (Validator) Register(app *app.Application) {
 		})
 
 		validate.RegisterTranslation("mobile", trans, func(ut ut.Translator) error {
-			return ut.Add("mobile", lang.Trans("validation.mobile"), false)
+			return ut.Add("mobile", app.Lang.Trans("validation.mobile"), false)
 		}, func(ut ut.Translator, fe validator.FieldError) string {
 			t, _ := ut.T("mobile", fe.Field())
 			return t

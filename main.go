@@ -9,7 +9,7 @@ import (
 	"github.com/fitv/min/global"
 )
 
-//go:embed static templates
+//go:embed static templates locales
 var fs embed.FS
 
 func main() {
