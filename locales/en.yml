@@ -1,0 +1,19 @@
+auth:
+  invalid_credentials: invalid credentials
+
+message:
+  success: success
+  failed: failed
+  not_found: not found
+  unauthorized: unauthorized
+  forbidden: forbidden
+  server_error: server error
+  validate_failed: verification failed
+
+user:
+  not_found: user not exists
+  username: username
+  password: password
+
+validation:
+  mobile: "{0} format is incorrect"

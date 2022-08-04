@@ -6,7 +6,6 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/fitv/min/core/lang"
 	"github.com/fitv/min/ent"
 	"github.com/fitv/min/global"
 	"github.com/fitv/min/util/str"
@@ -38,13 +37,13 @@ func BadRequest(c *gin.Context, message string) {
 
 func Unauthorized(c *gin.Context) {
 	c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-		"message": lang.Trans("message.unauthorized"),
+		"message": global.Lang().Trans("message.unauthorized"),
 	})
 }
 
 func Forbidden(c *gin.Context) {
 	c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
-		"message": lang.Trans("message.forbidden"),
+		"message": global.Lang().Trans("message.forbidden"),
 	})
 }
 
@@ -63,7 +62,7 @@ func UnprocessableEntity(c *gin.Context, message string, errors map[string]strin
 
 func ServerError(c *gin.Context) {
 	c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-		"message": lang.Trans("message.server_error"),
+		"message": global.Lang().Trans("message.server_error"),
 	})
 }
 
@@ -76,7 +75,7 @@ func HandleEntError(c *gin.Context, err error) {
 		if len(matches) > 1 {
 			label = matches[1]
 		}
-		NotFound(c, lang.Trans(label+".not_found"))
+		NotFound(c, global.Lang().Trans(label+".not_found"))
 	default:
 		global.Log().Error(fmt.Errorf("ent error: %w", err))
 		ServerError(c)
@@ -87,7 +86,7 @@ func HandleEntError(c *gin.Context, err error) {
 func HandleValidatorError(c *gin.Context, err error) {
 	errs, ok := err.(validator.ValidationErrors)
 	if !ok || len(errs) == 0 {
-		BadRequest(c, lang.Trans("message.validate_failed"))
+		BadRequest(c, global.Lang().Trans("message.validate_failed"))
 		return
 	}
 
@@ -100,7 +99,7 @@ func HandleValidatorError(c *gin.Context, err error) {
 
 	for i, err := range errs {
 		field := str.ToSnakeCase(err.Field())
-		name := lang.Trans(label + "." + field)
+		name := global.Lang().Trans(label + "." + field)
 
 		errors[field] = strings.Replace(err.Translate(global.Trans()), err.Field(), name, 1)
 		if i == 0 {

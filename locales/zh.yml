@@ -1,0 +1,19 @@
+auth:
+  invalid_credentials: 用户名或密码错误
+
+message:
+  success: 操作成功
+  failed: 操作失败
+  not_found: 未找到
+  unauthorized: 未登录
+  forbidden: 无权限
+  server_error: 服务器错误
+  validate_failed: 验证失败
+
+user:
+  not_found: 用户不存在
+  username: 姓名
+  password: 密码
+
+validation:
+  mobile: "{0}格式不正确"
