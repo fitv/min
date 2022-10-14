@@ -26,7 +26,7 @@ func (Gin) Register(app *app.Application) {
 		if err != nil {
 			panic(fmt.Errorf("open log file error: %w", err))
 		}
-		app.AddClose(func() {
+		app.AddShutdown(func() {
 			file.Close()
 		})
 

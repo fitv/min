@@ -37,7 +37,7 @@ func (Database) Register(app *app.Application) {
 		}
 		app.DB = db
 
-		app.AddClose(func() {
+		app.AddShutdown(func() {
 			app.DB.Close()
 		})
 	default:

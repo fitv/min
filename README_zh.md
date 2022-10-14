@@ -5,7 +5,6 @@
 ## 使用的第三方包
 - [Gin](https://github.com/gin-gonic/gin)
 - [ent](https://entgo.io/ent)
-- [zap](https://github.com/uber-go/zap)
 - [viper](https://github.com/spf13/viper)
 - [jwt-go](https://github.com/golang-jwt/jwt)
 - [go-redis](https://github.com/go-redis/redis)
@@ -17,7 +16,6 @@
  - 基于 `JWT` 的用户授权
  - 基于 `Viper` 的配置
  - 基于 `Redis` 缓存器
- - 基于 `Zap` 日志器
  - `ent` 模型分页器
  - API 资源转换器
  - 多语言翻译支持

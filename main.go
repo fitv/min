@@ -14,7 +14,7 @@ var fs embed.FS
 
 func main() {
 	global.App = app.NewApplication(fs)
-	defer global.App.Close()
+	defer global.App.Shutdown()
 
 	global.App.AddService(
 		&service.Logger{},

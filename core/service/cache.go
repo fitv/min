@@ -25,7 +25,7 @@ func (Cache) Register(app *app.Application) {
 			panic(fmt.Errorf("redis init error: %w", err))
 		}
 
-		app.AddClose(func() {
+		app.AddShutdown(func() {
 			redis.Close()
 		})
 		app.Cache = cache.NewRedisCache(redis.Client(), &cache.Option{

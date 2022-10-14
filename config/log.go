@@ -6,17 +6,19 @@ import (
 )
 
 type LogConfig struct {
-	Driver   string // Supports: "zap", "file"
-	Path     string
-	Filename string
-	Level    string // Supports: "debug", "info", "warn", "error"
-	Daily    bool   // Supported driver: "file", Whether to generate a new log file every day
+	Driver string // Supports: "file", "stdout"
+	Path   string
+	Name   string
+	Level  string // Supports: "debug", "info", "warn", "error", "fatal"
+	Daily  bool   // Supported driver: "file", Whether to generate a new log file every day
+	Days   int    // Supported driver: "file", The number of days to keep the log file
 }
 
 var Log = &LogConfig{
-	Driver:   config.GetString("log.driver", "zap"),
-	Path:     config.GetString("log.path", "logs"),
-	Filename: config.GetString("log.filename", str.ToSnakeCase(App.Name)),
-	Level:    config.GetString("log.level", "info"),
-	Daily:    config.GetBool("log.daily", true),
+	Driver: config.GetString("log.driver", "file"),
+	Path:   config.GetString("log.path", "logs"),
+	Name:   config.GetString("log.name", str.ToSnakeCase(App.Name)),
+	Level:  config.GetString("log.level", "info"),
+	Daily:  config.GetBool("log.daily", true),
+	Days:   config.GetInt("log.days", 15),
 }

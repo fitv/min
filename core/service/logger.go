@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/fitv/go-logger"
 	"github.com/fitv/min/config"
 	"github.com/fitv/min/core/app"
-	"github.com/fitv/min/core/logger"
 	"github.com/fitv/min/util/file"
 )
 
@@ -27,25 +27,24 @@ func (Logger) Register(app *app.Application) {
 		}
 	}
 	option := &logger.Option{
-		Filename: config.Log.Filename,
-		Path:     config.Log.Path,
-		Daily:    config.Log.Daily,
+		Name:  config.Log.Name,
+		Path:  config.Log.Path,
+		Daily: config.Log.Daily,
+		Days:  config.Log.Days,
 	}
 
 	switch config.Log.Driver {
 	case "file":
-		app.Logger = logger.New(logLevel, logger.NewFileLogger(option))
-	case "zap":
-		zapLogger, err := logger.NewZapLogger(option)
-		if err != nil {
-			panic(fmt.Errorf("zap logger error: %w", err))
-		}
-		app.Logger = logger.New(logLevel, zapLogger)
+		app.Logger = logger.New(logger.NewFileLogger(option))
+		app.Logger.SetLevel(logLevel)
+	case "stdout":
+		app.Logger = logger.New(logger.NewStdLogger())
+		app.Logger.SetLevel(logLevel)
 	default:
 		panic(fmt.Errorf("logger driver %s not support", config.Log.Driver))
 	}
 
-	app.AddClose(func() {
+	app.AddShutdown(func() {
 		app.Logger.Close()
 	})
 }

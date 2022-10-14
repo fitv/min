@@ -12,10 +12,10 @@ import (
 	"time"
 
 	"github.com/fitv/go-i18n"
+	"github.com/fitv/go-logger"
 	"github.com/fitv/min/config"
 	"github.com/fitv/min/core/cache"
 	"github.com/fitv/min/core/db"
-	"github.com/fitv/min/core/logger"
 	"github.com/fitv/min/core/redis"
 	"github.com/gin-gonic/gin"
 	ut "github.com/go-playground/universal-translator"
@@ -27,19 +27,19 @@ const (
 )
 
 type Application struct {
-	Gin         *gin.Engine
-	FS          embed.FS
-	DB          *db.DB
-	Cache       cache.Cache
-	Redis       *redis.Redis
-	Logger      *logger.Logger
-	Translator  ut.Translator
-	Lang        *i18n.I18n
-	Services    []Service
-	Routes      []Route
-	Validations []Validation
-	CloseFuncs  []func()
-	Version     string
+	Gin           *gin.Engine
+	FS            embed.FS
+	DB            *db.DB
+	Cache         cache.Cache
+	Redis         *redis.Redis
+	Logger        *logger.Logger
+	Translator    ut.Translator
+	Lang          *i18n.I18n
+	Services      []Service
+	Routes        []Route
+	Validations   []Validation
+	ShutdownFuncs []func()
+	Version       string
 }
 
 type Route func(*gin.Engine)
@@ -66,9 +66,9 @@ func (app *Application) Run() {
 	app.listenAndServe()
 }
 
-// AddClose add close function
-func (app *Application) AddClose(fn func()) {
-	app.CloseFuncs = append(app.CloseFuncs, fn)
+// AddShutdown add shutdown function
+func (app *Application) AddShutdown(fn func()) {
+	app.ShutdownFuncs = append(app.ShutdownFuncs, fn)
 }
 
 // AddValidation add validation
@@ -81,10 +81,10 @@ func (app *Application) AddService(ss ...Service) {
 	app.Services = append(app.Services, ss...)
 }
 
-// Close close application
-func (app *Application) Close() {
-	for _, closeFunc := range app.CloseFuncs {
-		closeFunc()
+// Shutdown shutdown the application
+func (app *Application) Shutdown() {
+	for _, ShutdownFunc := range app.ShutdownFuncs {
+		ShutdownFunc()
 	}
 }
 

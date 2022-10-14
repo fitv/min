@@ -24,7 +24,7 @@ func (Redis) Register(app *app.Application) {
 		panic(fmt.Errorf("redis init error: %w", err))
 	}
 
-	app.AddClose(func() {
+	app.AddShutdown(func() {
 		app.Redis.Close()
 	})
 }

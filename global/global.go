@@ -4,10 +4,10 @@ import (
 	"embed"
 
 	"github.com/fitv/go-i18n"
+	"github.com/fitv/go-logger"
 	"github.com/fitv/min/core/app"
 	"github.com/fitv/min/core/cache"
 	"github.com/fitv/min/core/db"
-	"github.com/fitv/min/core/logger"
 	"github.com/fitv/min/ent"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-redis/redis/v8"
