@@ -73,6 +73,7 @@ global.Log().Debug("debug")
 global.Log().Info("info")
 global.Log().Warn("warn")
 global.Log().Error("error")
+global.Log().Fatal("fatal")
 ```
 
 ### 多语言翻译
