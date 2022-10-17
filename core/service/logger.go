@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"path/filepath"
 	"strings"
 
 	"github.com/fitv/go-logger"
@@ -15,7 +16,7 @@ type Logger struct {
 }
 
 func (Logger) Register(app *app.Application) {
-	err := file.MkdirAll(config.Log.Path)
+	err := file.MkdirAll(filepath.Dir(config.Log.Path))
 	if err != nil {
 		panic(fmt.Errorf("logger error: %w", err))
 	}
@@ -27,7 +28,6 @@ func (Logger) Register(app *app.Application) {
 		}
 	}
 	option := &logger.Option{
-		Name:  config.Log.Name,
 		Path:  config.Log.Path,
 		Daily: config.Log.Daily,
 		Days:  config.Log.Days,

@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/fitv/min/config"
 	"github.com/fitv/min/core/app"
@@ -22,7 +23,7 @@ func (Gin) Register(app *app.Application) {
 		gin.DisableConsoleColor()
 		gin.SetMode(gin.ReleaseMode)
 
-		file, err := os.OpenFile(config.Log.Path+"/gin.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
+		file, err := os.OpenFile(filepath.Dir(config.Log.Path)+"/gin.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
 		if err != nil {
 			panic(fmt.Errorf("open log file error: %w", err))
 		}
