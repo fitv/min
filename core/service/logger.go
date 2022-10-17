@@ -35,16 +35,16 @@ func (Logger) Register(app *app.Application) {
 
 	switch config.Log.Driver {
 	case "file":
-		app.Logger = logger.New(logger.NewFileLogger(option))
+		fileWriter := logger.NewFileWriter(option)
+
+		app.Logger = logger.New()
+		app.Logger.SetOut(fileWriter)
 		app.Logger.SetLevel(logLevel)
-	case "stdout":
-		app.Logger = logger.New(logger.NewStdLogger())
-		app.Logger.SetLevel(logLevel)
+
+		app.AddShutdown(func() {
+			fileWriter.Close()
+		})
 	default:
 		panic(fmt.Errorf("logger driver %s not support", config.Log.Driver))
 	}
-
-	app.AddShutdown(func() {
-		app.Logger.Close()
-	})
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type LogConfig struct {
-	Driver string // Supports: "file", "stdout"
+	Driver string // Supports: "file"
 	Path   string
 	Level  string // Supports: "debug", "info", "warn", "error", "fatal"
 	Daily  bool   // Supported driver: "file", Whether to generate a new log file every day
