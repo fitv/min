@@ -2,13 +2,11 @@ package service
 
 import (
 	"fmt"
-	"path/filepath"
 	"strings"
 
 	"github.com/fitv/go-logger"
 	"github.com/fitv/min/config"
 	"github.com/fitv/min/core/app"
-	"github.com/fitv/min/util/file"
 )
 
 type Logger struct {
@@ -16,11 +14,6 @@ type Logger struct {
 }
 
 func (Logger) Register(app *app.Application) {
-	err := file.MkdirAll(filepath.Dir(config.Log.Path))
-	if err != nil {
-		panic(fmt.Errorf("logger error: %w", err))
-	}
-
 	logLevel := logger.InfoLevel
 	for key, val := range logger.LevelMap {
 		if val == strings.ToLower(config.Log.Level) {
@@ -36,7 +29,6 @@ func (Logger) Register(app *app.Application) {
 	switch config.Log.Driver {
 	case "file":
 		fileWriter := logger.NewFileWriter(option)
-
 		app.Logger = logger.New()
 		app.Logger.SetOutput(fileWriter)
 		app.Logger.SetLevel(logLevel)
