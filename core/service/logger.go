@@ -38,7 +38,7 @@ func (Logger) Register(app *app.Application) {
 		fileWriter := logger.NewFileWriter(option)
 
 		app.Logger = logger.New()
-		app.Logger.SetOut(fileWriter)
+		app.Logger.SetOutput(fileWriter)
 		app.Logger.SetLevel(logLevel)
 
 		app.AddShutdown(func() {

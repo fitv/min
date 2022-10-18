@@ -5,7 +5,7 @@ go 1.17
 require (
 	entgo.io/ent v0.11.1
 	github.com/fitv/go-i18n v1.0.4
-	github.com/fitv/go-logger v1.0.2
+	github.com/fitv/go-logger v1.0.3
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-playground/locales v0.14.0
 	github.com/go-playground/universal-translator v0.18.0
